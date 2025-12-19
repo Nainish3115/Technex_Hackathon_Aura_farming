@@ -1,0 +1,176 @@
+/* Custom animations for the AI companion */
+
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideInFromBottom {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.7;
+    }
+  }
+  
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-10px);
+    }
+    60% {
+      transform: translateY(-5px);
+    }
+  }
+  
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  @keyframes glow {
+    0%, 100% {
+      box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
+    }
+  }
+  
+  /* Avatar-specific animations */
+  @keyframes avatarBreathing {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.02);
+    }
+  }
+  
+  @keyframes avatarNodding {
+    0%, 100% {
+      transform: rotateX(0deg);
+    }
+    25%, 75% {
+      transform: rotateX(5deg);
+    }
+    50% {
+      transform: rotateX(-2deg);
+    }
+  }
+  
+  @keyframes lipSync {
+    0%, 100% {
+      transform: scaleY(1);
+    }
+    50% {
+      transform: scaleY(0.8);
+    }
+  }
+  
+  /* Utility classes */
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out;
+  }
+  
+  .animate-slide-in {
+    animation: slideInFromBottom 0.3s ease-out;
+  }
+  
+  .animate-scale-in {
+    animation: scaleIn 0.3s ease-out;
+  }
+  
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite;
+  }
+  
+  .animate-avatar-breathing {
+    animation: avatarBreathing 4s ease-in-out infinite;
+  }
+  
+  .animate-avatar-nodding {
+    animation: avatarNodding 2s ease-in-out infinite;
+  }
+  
+  /* Accessibility animations - respect user preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fade-in,
+    .animate-slide-in,
+    .animate-scale-in,
+    .animate-glow,
+    .animate-avatar-breathing,
+    .animate-avatar-nodding {
+      animation: none;
+    }
+  }
+  
+  /* Elder-friendly animations - slower and more subtle */
+  .elderly-mode .animate-fade-in {
+    animation-duration: 0.8s;
+  }
+  
+  .elderly-mode .animate-slide-in {
+    animation-duration: 0.5s;
+  }
+  
+  .elderly-mode .animate-avatar-breathing {
+    animation-duration: 6s;
+  }
+  
+  /* Voice activity indicators */
+  .voice-listening {
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  
+  .voice-speaking {
+    animation: glow 1s ease-in-out infinite;
+  }
+  
+  .voice-processing {
+    animation: bounce 0.8s ease-in-out infinite;
+  }
+  
+  /* Loading states */
+  .loading-dots::after {
+    content: '';
+    animation: loadingDots 1.5s ease-in-out infinite;
+  }
+  
+  @keyframes loadingDots {
+    0%, 20% {
+      content: '.';
+    }
+    40% {
+      content: '..';
+    }
+    60%, 100% {
+      content: '...';
+    }
+  }

@@ -1,0 +1,60 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Deny by default
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Users can read/write ONLY their own profile doc (doc id == uid)
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Users can read/write ONLY their own weather-soil data (doc id == uid)
+    match /weather-soil/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Users can read/write ONLY their own farm data (doc id == uid)
+    match /farms/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Users can read/write ONLY their own crop info
+    match /crop-info/{cropId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Users can read/write ONLY their own images (doc id == uid)
+    match /images/{imageId} {
+      allow read, write: if request.auth != null && request.auth.uid == resource.data.createdBy;
+    }
+
+    // Credit score simulations: documents contain a uid field
+    match /credit-simulations/{docId} {
+      allow read, write: if request.auth != null && (
+        (resource == null && request.resource.data.uid == request.auth.uid) ||
+        (resource != null && resource.data.uid == request.auth.uid)
+      );
+    }
+
+    // Credit summary per user: document id equals uid
+    match /credit-summary/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Loan eligibility history: documents contain a uid field
+    match /loan-eligibility/{docId} {
+      allow read, write: if request.auth != null && (
+        (resource == null && request.resource.data.uid == request.auth.uid) ||
+        (resource != null && resource.data.uid == request.auth.uid)
+      );
+    }
+
+    // Loan eligibility summary per user: document id equals uid
+    match /loan-summary/{userId} {
+      allow read, write: if request.auth.uid == userId;
+    }
+  }
+}
